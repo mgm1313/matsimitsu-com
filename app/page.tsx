@@ -11,6 +11,7 @@ const trips = [
     date: "MAY 11, 2025 - JUNE 13, 2025",
     imageUrl: "/placeholder.svg?width=600&height=400",
     isFeatured: true,
+    slug: "amsterdam-do-kunjing",
   },
   {
     id: "2",
@@ -24,6 +25,7 @@ const trips = [
       "/placeholder.svg?width=100&height=100",
       "/placeholder.svg?width=100&height=100",
     ],
+    slug: "china-thailand-2025",
   },
   {
     id: "3",
@@ -36,6 +38,7 @@ const trips = [
       "/placeholder.svg?width=100&height=100",
       "/placeholder.svg?width=100&height=100",
     ],
+    slug: "tunisia-2025",
   },
 ]
 
@@ -114,45 +117,52 @@ export default function HomePage() {
             My trips <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Link>
           {featuredTrip && (
-            <Card className="overflow-hidden shadow-lg">
-              <div className="relative h-64">
-                <Image
-                  src={featuredTrip.imageUrl || "/placeholder.svg"}
-                  alt={featuredTrip.title}
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent p-4 flex flex-col justify-end">
-                  <p className="text-xs text-slate-200">{featuredTrip.date}</p>
-                  <h3 className="text-2xl font-bold text-white">{featuredTrip.title}</h3>
+            <Link href={`/trips/${featuredTrip.slug}`} className="block group">
+              <Card className="overflow-hidden shadow-lg transition-shadow duration-300 group-hover:shadow-xl">
+                <div className="relative h-64">
+                  <Image
+                    src={featuredTrip.imageUrl || "/placeholder.svg"}
+                    alt={featuredTrip.title}
+                    layout="fill"
+                    objectFit="cover"
+                    className="transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent p-4 flex flex-col justify-end">
+                    <p className="text-xs text-slate-200">{featuredTrip.date}</p>
+                    <h3 className="text-2xl font-bold text-white group-hover:underline">{featuredTrip.title}</h3>
+                  </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            </Link>
           )}
           {otherTrips.map((trip) => (
-            <Card key={trip.id} className="shadow-md">
-              <CardHeader>
-                <p className="text-xs text-slate-500 dark:text-slate-400">{trip.date}</p>
-                <CardTitle className="text-lg text-slate-800 dark:text-slate-200">{trip.title}</CardTitle>
-                <CardDescription className="text-sm text-slate-600 dark:text-slate-300">
-                  {trip.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-4 gap-2">
-                  {trip.smallImages?.map((img, index) => (
-                    <Image
-                      key={index}
-                      src={img || "/placeholder.svg"}
-                      alt={`${trip.title} image ${index + 1}`}
-                      width={100}
-                      height={100}
-                      className="rounded-md object-cover aspect-square"
-                    />
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            <Link key={trip.id} href={`/trips/${trip.slug}`} className="block group">
+              <Card className="shadow-md transition-shadow duration-300 group-hover:shadow-lg">
+                <CardHeader>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{trip.date}</p>
+                  <CardTitle className="text-lg text-slate-800 dark:text-slate-200 group-hover:underline">
+                    {trip.title}
+                  </CardTitle>
+                  <CardDescription className="text-sm text-slate-600 dark:text-slate-300">
+                    {trip.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-4 gap-2">
+                    {trip.smallImages?.map((img, index) => (
+                      <Image
+                        key={index}
+                        src={img || "/placeholder.svg"}
+                        alt={`${trip.title} image ${index + 1}`}
+                        width={100}
+                        height={100}
+                        className="rounded-md object-cover aspect-square transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </section>
 
